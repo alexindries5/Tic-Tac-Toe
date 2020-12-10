@@ -17,6 +17,11 @@ export default class Board extends Component{
     onSquareClick(index) {
 		const squares = [...this.state.squares];
 		if(squares[index]) return;
+		this.setState({
+			squares,
+			isXTurn: !this.state.isXTurn,
+			count : this.state.count+1
+		})
 		if (calculateWinner(squares)) {
 			return;
 		}
@@ -28,11 +33,7 @@ export default class Board extends Component{
 		// // 	  console.log("Intra");
 		// //   }
 		squares[index] = this.state.isXTurn ? 'X' : '0'
-		this.setState({
-			squares,
-			isXTurn: !this.state.isXTurn,
-		})
-		this.state.count = this.state.count+1
+		
 	}
 	
     render() {
@@ -40,7 +41,7 @@ export default class Board extends Component{
 		const none = " No winner";
 		// this.state.winner = calculateWinner(this.state.squares);
     	let status;
-    if (winner && this.state.count !=9) {
+    if (winner && this.state.count <=9) {
 	  status = 'Winner: ' + winner;
 	} else if(!winner && this.state.count == 9){
 		status ="Draw" + none;
